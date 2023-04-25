@@ -27,7 +27,7 @@ ORDER BY title_count DESC;
 -- CHALLENGE 3
 
 USE publications;
-SELECT authors.au_id, au_lname, au_fname, count(qty) as total
+SELECT authors.au_id, au_lname, au_fname, sum(qty) as total
 from authors
 INNER JOIN titleauthor 
 ON titleauthor.au_id=authors.au_id
@@ -41,7 +41,7 @@ LIMIT 3;
 
 -- CHALLENGE 4
 
-SELECT authors.au_id, au_lname, au_fname, count(qty) as total
+SELECT authors.au_id, au_lname, au_fname, sum(qty) as total
 from authors
 LEFT JOIN titleauthor 
 ON titleauthor.au_id=authors.au_id

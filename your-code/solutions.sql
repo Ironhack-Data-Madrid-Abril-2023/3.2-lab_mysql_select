@@ -35,20 +35,22 @@ group by authors.au_id, title
 
 # challenge 3
 
+use publications;
 select authors.au_id,
 	au_lname,
     au_fname,
-       ytd_sales
+	sum(qty) as total
 from authors
 
 inner join titleauthor
 on authors.au_id=titleauthor.au_id
 inner join titles
 on titleauthor.title_id=titles.title_id
-inner join publishers
-on titles.pub_id=publishers.pub_id
+inner join sales
+on sales.title_id=titles.title_id
+group by titleauthor.au_id
 
-order by ytd_sales desc
+order by total desc
 
 LIMIT 3;
 
@@ -59,14 +61,15 @@ use publications;
 select authors.au_id,
 	au_lname,
     au_fname,
-       ytd_sales
+	sum(qty) as total
 from authors
 
 inner join titleauthor
 on authors.au_id=titleauthor.au_id
 inner join titles
 on titleauthor.title_id=titles.title_id
-inner join publishers
-on titles.pub_id=publishers.pub_id
+inner join sales
+on sales.title_id=titles.title_id
+group by titleauthor.au_id
 
-order by ytd_sales desc;
+order by total desc

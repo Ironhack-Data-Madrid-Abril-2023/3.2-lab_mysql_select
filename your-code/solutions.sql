@@ -30,3 +30,12 @@ ORDER BY total desc LIMIT 3
     '427-17-2319','Dull','Ann','50'
 
 Challenge 4 - Best Selling Authors Ranking
+
+create table publications.store_sales_top3
+select authors.au_id as "AUTHOR ID", au_lname as "LAST NAME", au_fname "FIRST NAME", IFNULL(sum(qty),0) as Total 
+from authors
+left join titleauthor on titleauthor.au_id = authors.au_id
+left join titles on titles.title_id= titleauthor.title_id
+left join sales on sales.title_id = titles.title_id
+group by authors.au_id
+ORDER BY total desc LIMIT 23;

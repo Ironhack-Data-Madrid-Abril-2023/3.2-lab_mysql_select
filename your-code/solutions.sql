@@ -12,7 +12,11 @@ on titles.pub_id = publishers.pub_id
 -- challenge 2
 
 SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
-select  titleauthor.au_id as "AUTHOR ID" , authors.au_lname as "LAST NAME", authors.au_fname as "FIRST NAME", publishers.pub_name as "PUBLISHER", count(titles.title) as "TITLE COUNT"
+select  titleauthor.au_id as "AUTHOR ID" , 
+			authors.au_lname as "LAST NAME", 
+			authors.au_fname as "FIRST NAME", 
+			publishers.pub_name as "PUBLISHER", 
+			count(titles.title) as "TITLE COUNT"
 from titleauthor
 join authors
 on titleauthor.au_id = authors.au_id
@@ -28,24 +32,29 @@ order by titleauthor.au_id
 SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 select  titleauthor.au_id as "AUTHOR ID" , 
 		authors.au_lname as "LAST NAME", 
-		authors.au_fname as "FIRST NAME", count(stor_id) as "TOTAL SALES"
+		authors.au_fname as "FIRST NAME", sum(sales.qty) as "TOTAL SALES"
 from titleauthor
 join authors
 on titleauthor.au_id = authors.au_id
+join titles
+on titleauthor.title_id = titles.title_id
 join sales
+on titles.title_id = sales.title_id
 group by authors.au_id
-order by authors.au_id desc
-limit 3;
+order by sum(sales.qty) desc
 
 -- challenge 4
 
 SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 select  titleauthor.au_id as "AUTHOR ID" , 
 		authors.au_lname as "LAST NAME", 
-		authors.au_fname as "FIRST NAME", coalesce(COUNT(stor_id), 0) as "TOTAL SALES"
+		authors.au_fname as "FIRST NAME", coalesce(sum(sales.qty), 0) as "TOTAL SALES"
 from titleauthor
 join authors
 on titleauthor.au_id = authors.au_id
+join titles
+on titleauthor.title_id = titles.title_id
 join sales
+on titles.title_id = sales.title_id
 group by authors.au_id
-order by count(stor_id) desc
+order by sum(sales.qty) desc

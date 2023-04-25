@@ -41,7 +41,7 @@ LIMIT 3;
 
 -- CHALLENGE 4
 
-SELECT authors.au_id, au_lname, au_fname, sum(qty) as total
+SELECT authors.au_id, au_lname, au_fname, COALESCE(sum(qty),0) as total
 from authors
 LEFT JOIN titleauthor 
 ON titleauthor.au_id=authors.au_id

@@ -21,7 +21,7 @@ ORDER BY au_id
 ;
 
 
-SELECT au.au_id, au_lname, au_fname, count(s.qty) as total
+SELECT au.au_id, au_lname, au_fname, sum(s.qty) as total
 FROM authors AS au
 INNER JOIN titleauthor AS ta
 ON au.au_id = ta.au_id
@@ -34,7 +34,7 @@ ORDER BY total DESC
 LIMIT 3
 ;
 
-SELECT au.au_id, au_lname, au_fname, count(s.qty) as total
+SELECT au.au_id, au_lname, au_fname, ifnull(sum(s.qty) , 0) as total
 FROM authors AS au
 LEFT JOIN titleauthor AS ta
 ON au.au_id = ta.au_id
@@ -44,5 +44,6 @@ LEFT JOIN sales AS s
 ON t.title_id = s.title_id
 GROUP BY au.au_id
 ORDER BY total DESC
+LIMIT 23
 
 ;

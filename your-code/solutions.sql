@@ -48,13 +48,13 @@ order by sum(sales.qty) desc
 SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 select  titleauthor.au_id as "AUTHOR ID" , 
 		authors.au_lname as "LAST NAME", 
-		authors.au_fname as "FIRST NAME", coalesce(sum(sales.qty), 0) as "TOTAL SALES"
-from titleauthor
-join authors
+		authors.au_fname as "FIRST NAME", coalesce(sum(sales.qty), 0) as TOTALSALES
+from authors
+LEFT join titleauthor
 on titleauthor.au_id = authors.au_id
-join titles
+LEFT join titles
 on titleauthor.title_id = titles.title_id
-join sales
+LEFT join sales
 on titles.title_id = sales.title_id
 group by authors.au_id
-order by sum(sales.qty) desc
+order by TOTALSALES desc

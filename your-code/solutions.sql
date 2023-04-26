@@ -31,7 +31,7 @@ GROUP BY AUTHOR_ID, publishers.pub_name;
 SELECT authors.au_id as AUTHOR_ID,
  authors.au_lname as LAST_NAME,
  authors.au_fname as FIRST_NAME,
- COUNT(sales.qty) as TOTAL
+ SUM(sales.qty) as TOTAL
 FROM authors
 JOIN titleauthor 
 ON authors.au_id = titleauthor.au_id
@@ -49,7 +49,7 @@ ORDER BY TOTAL DESC LIMIT 3;
 SELECT authors.au_id as AUTHOR_ID,
  authors.au_lname as LAST_NAME,
  authors.au_fname as FIRST_NAME,
- count(titles.title_id) as TOTAL
+ SUM(titles.title_id) as TOTAL
 FROM authors
 LEFT JOIN titleauthor 
 ON authors.au_id = titleauthor.au_id

@@ -18,13 +18,13 @@ ORDER BY authors.au_id DESC;
 
 /* Challenge 3*/
 
-SELECT authors.au_id AS 'AUTHOR ID', authors.au_lname AS 'LAST NAME', authors.au_fname AS 'FIRST NAME', MAX(sales.qty) AS 'TOTAL'
+SELECT authors.au_id AS 'AUTHOR ID', authors.au_lname AS 'LAST NAME', authors.au_fname AS 'FIRST NAME', SUM(sales.qty) AS 'TOTAL'
 FROM authors
 LEFT JOIN titleauthor ON authors.au_id = titleauthor.au_id
 LEFT JOIN titles ON titleauthor.title_id = titles.title_id
 LEFT JOIN sales ON titles.title_id = sales.title_id
-GROUP BY authors.au_id, authors.au_lname, sales.qty
-ORDER BY sales.qty DESC
+GROUP BY authors.au_id
+ORDER BY TOTAL DESC
 LIMIT 3;
 
 /* Challenge 4*/
@@ -35,8 +35,7 @@ LEFT JOIN titleauthor ON authors.au_id = titleauthor.au_id
 LEFT JOIN titles ON titleauthor.title_id = titles.title_id
 LEFT JOIN sales ON titles.title_id = sales.title_id
 GROUP BY authors.au_id, authors.au_lname, sales.qty
-ORDER BY TOTAL DESC
-LIMIT 23;
+ORDER BY TOTAL DESC;
 
 
 
